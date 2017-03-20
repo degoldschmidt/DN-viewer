@@ -256,6 +256,7 @@ var onode = svg.append('g').selectAll(".outer_node")
     .data(data.outer)
   .enter().append("g")
     .attr("class", "outer_node")
+    .attr("clicked", false)
     .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
     .on("mouseover", mouseover)
     .on("mouseout", mouseout)
@@ -282,6 +283,7 @@ var inode = svg.append('g').selectAll(".inner_node")
     .data(data.inner)
   .enter().append("g")
     .attr("class", "inner_node")
+    .attr("clicked", false)
     .attr("transform", function(d, i) { return "translate(" + d.x + "," + d.y + ")"})
     .on("mouseover", mouseover)
     .on("mouseout", mouseout)
@@ -310,22 +312,22 @@ function mouseover(d)
 
 function mouseclick(d)
 {
-  console.log(svg)
+  console.log(d)
 	// bring to front
 	d3.selectAll('.links .link').sort(function(a, b){ return d.related_links.indexOf(a.id); });
-  if (clicked == 0) {
-    clicked = 1;
+  if (d.clicked == 0) {
+    d.clicked = 1;
   } else {
-    clicked = 0;
+    d.clicked = 0;
   }
-  if (clicked == 0) {
+  if (d.clicked == 0) {
     highlighter(d)
   }
 }
 
 function mouseout(d)
 {
-  if (clicked == 0) {
+  if (d.clicked == 0) {
     dehighlighter(d)
   }
 }
