@@ -77,7 +77,13 @@ text {
 // Loosely based on http://bl.ocks.org/mbostock/4063550
 //
 var clicked = 0;
-var data = [[120, ["like", "call response", "dramatic intro", "has breaks", "male vocalist", "silly", "swing"]], [150, ["brassy", "like", "calm energy", "female vocalist", "swing", "fun"]], [170, ["calm energy", "instrumental", "swing", "like", "happy"]], [140, ["has breaks", "male vocalist", "swing", "piano", "banjo", "chill"]], [160, ["calm energy", "instrumental", "swing", "like", "interesting"]], [140, ["brassy", "like", "energy", "dramatic intro", "male vocalist", "baseball", "swing"]], [170, ["instrumental", "interesting", "high energy", "like", "swing"]], [140, ["instrumental", "energy", "like", "swing"]], [200, ["instrumental", "brassy", "dramatic intro", "like", "swing"]], [160, ["male vocalist", "brassy", "swing", "like", "my favorites"]], [130, ["like", "interesting", "dramatic intro", "male vocalist", "silly", "swing", "gospel"]], [160, ["like", "long intro", "announcer", "energy", "swing", "female vocalist"]], [170, ["instrumental", "swing", "bass", "like"]], [150, ["like", "interesting", "has breaks", "instrumental", "chunky", "swing", "banjo", "trumpet"]], [170, ["like", "has breaks", "male vocalist", "silly", "swing", "banjo"]], [190, ["instrumental", "banjo", "swing"]], [130, ["instrumental", "brassy", "banjo", "like", "swing"]], [160, ["brassy", "like", "energy", "instrumental", "big band", "jam", "swing"]], [150, ["like", "male vocalist", "live", "swing", "piano", "banjo", "chill"]], [150, ["like", "trick ending", "instrumental", "chunky", "swing", "chill"]], [120, ["brassy", "like", "female vocalist", "swing", "chill", "energy buildup"]], [150, ["brassy", "like", "interesting", "instrumental", "swing", "piano"]], [190, ["brassy", "like", "long intro", "energy", "baseball", "swing", "female vocalist"]], [180, ["calm energy", "female vocalist", "live", "like", "swing"]], [200, ["banjo", "like", "long intro", "interesting", "energy", "my favorites", "male vocalist", "silly", "swing", "fun", "balboa"]], [150, ["brassy", "calm energy", "chunky", "instrumental", "old-timey", "live", "swing"]], [160, ["like", "call response", "interesting", "instrumental", "calm energy", "swing"]], [180, ["interesting", "swing", "fast", "male vocalist"]], [150, ["calm energy", "chunky", "swing", "female vocalist", "like"]], [180, ["like", "has breaks", "male vocalist", "chunky", "silly", "swing"]], [140, ["instrumental", "brassy", "dramatic intro", "swing", "chill"]], [150, ["male vocalist", "trumpet", "like", "swing"]], [150, ["instrumental", "energy", "like", "has breaks", "swing"]], [180, ["brassy", "like", "energy", "has breaks", "instrumental", "has calm", "swing"]], [150, ["female vocalist", "swing"]], [170, ["instrumental", "brassy", "energy", "swing"]], [170, ["calm energy", "instrumental", "energy", "like", "swing"]], [190, ["brassy", "like", "instrumental", "high energy", "swing", "trumpet"]], [160, ["male vocalist", "energy", "swing", "old-timey"]], [170, ["like", "oldies", "my favorites", "fast", "male vocalist", "high energy", "swing"]]];
+var data = [[120, ["like", "call response", "dramatic intro", "has breaks", "male vocalist", "silly", "swing"],
+						["like", "call response", "dramatic intro", "has breaks", "male vocalist", "silly", "swing"]],
+						[150, ["brassy", "like", "calm energy", "female vocalist", "swing", "fun"], ["brassy", "like", "calm energy", "female vocalist", "swing", "fun"]],
+						[170, ["calm energy", "instrumental", "swing", "like", "happy"], ["calm energy", "instrumental", "swing", "like", "happy"]],
+						[140, ["has breaks", "male vocalist", "swing", "piano", "banjo", "chill"], ["has breaks", "male vocalist", "swing", "piano", "banjo", "chill"]],
+						[160, ["calm energy", "instrumental", "swing", "like", "interesting"], ["calm energy", "instrumental", "swing", "like", "interesting"]],
+						[140, ["brassy", "like", "energy", "dramatic intro", "male vocalist", "baseball", "swing"], ["brassy", "like", "energy", "dramatic intro", "male vocalist", "baseball", "swing"]]];
 
 // transform the data into a useful representation
 // 1 is inner, 2, is outer
@@ -89,10 +95,12 @@ var data = [[120, ["like", "call response", "dramatic intro", "has breaks", "mal
 
 
 var outer = d3.map();
+var inputs = d3.map();
 var inner = [];
 var links = [];
 
 var outerId = [0];
+//var inputId = [0];
 
 data.forEach(function(d){
 
@@ -103,8 +111,11 @@ data.forEach(function(d){
 	i.related_nodes = [i.id];
 	inner.push(i);
 
+	// TODO: d[2]
 	if (!Array.isArray(d[1]))
 		d[1] = [d[1]];
+	if (!Array.isArray(d[2]))
+		d[2] = [d[2]];
 
 	d[1].forEach(function(d1){
 
@@ -129,31 +140,69 @@ data.forEach(function(d){
 		o.related_nodes.push(i.id);
 		o.related_links.push(l.id);
 	});
+
+	// TODO: d[2]
+	d[2].forEach(function(d2){
+
+		o = inputs.get(d2);
+
+		if (o == null)
+		{
+			o = { name: d2,	id: 'o' + outerId[0], related_links: [] };
+			o.related_nodes = [o.id];
+			outerId[0] = outerId[0] + 1;
+
+			inputs.set(d2, o);
+		}
+
+		// create the links
+		l = { id: 'l-' + i.id + '-' + o.id, inner: i, outer: o }
+		links.push(l);
+
+		// and the relationships
+		i.related_nodes.push(o.id);
+		i.related_links.push(l.id);
+		o.related_nodes.push(i.id);
+		o.related_links.push(l.id);
+	});
 });
 
 data = {
 	inner: inner,
 	outer: outer.values(),
+	inputs: inputs.values(),
 	links: links
 }
-
+console.log(data.links)
 // sort the data -- TODO: have multiple sort options
 outer = data.outer;
 data.outer = Array(outer.length);
+inputs = data.inputs;
+data.inputs = Array(inputs.length);
 
 
 var i1 = 0;
-var i2 = outer.length - 1;
+var iout = outer.length - 1;
+var iin = inputs.length - 1;
 
 for (var i = 0; i < data.outer.length; ++i)
 {
 	if (i % 2 == 1)
-		data.outer[i2--] = outer[i];
+		data.outer[iout--] = outer[i];
 	else
 		data.outer[i1++] = outer[i];
 }
+i1 = 0;
+for (var i = 0; i < data.inputs.length; ++i)
+{
+	if (i % 2 == 1)
+		data.inputs[iin--] = inputs[i];
+	else
+		data.inputs[i1++] = inputs[i];
+}
 
 console.log(data.outer.reduce(function(a,b) { return a + b.related_links.length; }, 0) / data.outer.length);
+console.log(data.inputs.reduce(function(a,b) { return a + b.related_links.length; }, 0) / data.inputs.length);
 
 
 // from d3 colorbrewer:
@@ -174,6 +223,7 @@ var link_width = "1px";
 
 var il = data.inner.length;
 var ol = data.outer.length;
+//var inl = data.inputs.length;
 
 var inner_y = d3.scale.linear()
     .domain([0, il])
@@ -184,6 +234,10 @@ var outer_x = d3.scale.linear()
     .domain([0, data.outer.length])
     .range([limit, 180-limit]);
 
+var input_x = d3.scale.linear()
+    .domain([0, data.inputs.length])
+    .range([180+limit, 360-limit]);
+
 var outer_y = d3.scale.linear()
     .domain([0, data.outer.length])
     .range([0, diameter / 2 - 120]);
@@ -193,12 +247,21 @@ var outer_y = d3.scale.linear()
 data.outer = data.outer.map(function(d, i) {
     d.x = outer_x(i);
     d.y = diameter/3;
+		d.clicked = 0;
+    return d;
+});
+
+data.inputs = data.inputs.map(function(d, i) {
+    d.x = input_x(i);
+    d.y = diameter/3;
+		d.clicked = 0;
     return d;
 });
 
 data.inner = data.inner.map(function(d, i) {
     d.x = -(rect_width / 2);
     d.y = inner_y(i);
+		d.clicked = 0;
     return d;
 });
 
@@ -277,6 +340,33 @@ onode.append("text")
     .attr("transform", function(d) { return d.x < 180 ? "translate(8)" : "rotate(180)translate(-8)"; })
     .text(function(d) { return d.name; });
 
+	// outer nodes
+
+var onode = svg.append('g').selectAll(".outer_node")
+    .data(data.inputs)
+  .enter().append("g")
+    .attr("class", "outer_node")
+    .attr("clicked", false)
+    .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
+    .on("mouseover", mouseover)
+    .on("mouseout", mouseout)
+    .on("click", mouseclick);
+
+onode.append("circle")
+    .attr('id', function(d) { return d.id })
+    .attr("r", 4.5);
+
+onode.append("circle")
+    .attr('r', 20)
+    .attr('visibility', 'hidden');
+
+onode.append("text")
+	.attr('id', function(d) { return d.id + '-txt'; })
+    .attr("dy", ".31em")
+    .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
+    .attr("transform", function(d) { return d.x < 180 ? "translate(8)" : "rotate(180)translate(-8)"; })
+    .text(function(d) { return d.name; });
+
 // inner nodes
 
 var inode = svg.append('g').selectAll(".inner_node")
@@ -307,7 +397,9 @@ d3.select(self.frameElement).style("height", diameter - 150 + "px");
 
 function mouseover(d)
 {
-	highlighter(d)
+	if (d.clicked == 0) {
+		highlighter(d)
+	}
 }
 
 function mouseclick(d)
@@ -316,12 +408,11 @@ function mouseclick(d)
 	// bring to front
 	d3.selectAll('.links .link').sort(function(a, b){ return d.related_links.indexOf(a.id); });
   if (d.clicked == 0) {
+		highlighter(d)
     d.clicked = 1;
   } else {
+		dehighlighter(d)
     d.clicked = 0;
-  }
-  if (d.clicked == 0) {
-    highlighter(d)
   }
 }
 
