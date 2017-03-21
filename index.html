@@ -59,7 +59,7 @@
 
 				// The ID token you need to pass to your backend:
 				var id_token = googleUser.getAuthResponse().id_token;
-				console.log("ID Token: " + id_token);
+				console.log("https://degoldschmidt.github.io/DN-viewer/access.html?" + profile.getEmail());
 				window.location = "https://degoldschmidt.github.io/DN-viewer/access.html?" + profile.getEmail()
 			};
 
