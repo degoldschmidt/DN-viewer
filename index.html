@@ -60,13 +60,7 @@
 				// The ID token you need to pass to your backend:
 				var id_token = googleUser.getAuthResponse().id_token;
 				console.log("ID Token: " + id_token);
-
-				if(profile.getEmail() == "dennis.goldschmidt@neuro.fchampalimaud.org"){
-					window.location = "https://degoldschmidt.github.io/DN-viewer/map.html"
-				}
-				else{
-					window.location = "https://degoldschmidt.github.io/DN-viewer/404.html"
-				}
+				window.location = "https://degoldschmidt.github.io/DN-viewer/access.html?" + profile.getEmail()
 			};
 
 			function signOut() {
