@@ -10,17 +10,24 @@
 
 <body>
   <script>
+  var checked = 0
   var allowed_ids = ["dennis.goldschmidt@neuro.fchampalimaud.org"]
   var id = window.location.href.split('?').pop()
   allowed_ids.forEach(function(d2){
     console.log(id)
     console.log(d2)
     if(d2 === id){
-      console.log("up up and away")
-      window.location.href = "https://degoldschmidt.github.io/DN-viewer/map.html"
+      checked = 1
+      console.log(checked)
     }
   });
-  window.location = "https://degoldschmidt.github.io/DN-viewer/404.html"
+
+  if(checked==0){
+    window.location = "https://degoldschmidt.github.io/DN-viewer/404.html"
+  }
+  else{
+    window.location.href = "https://degoldschmidt.github.io/DN-viewer/map.html"
+  }
   </script>
 </body>
 </html>
