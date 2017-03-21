@@ -12,14 +12,22 @@
 	button {
 	    font-family: 'Lato', sans-serif;
 	}
+	nav {
+		background: #424242
+	}
+	body {
+		background: #FFDEEE
+	}
 	</style>
   <body>
+		<nav>
 		<!-- Colored raised button -->
 		<div class="g-signin2" data-onsuccess="onSignIn"></div>
 		<!-- Accent-colored raised button -->
 		<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" onclick="signOut()">
 		  Sign Out
 		</button>
+	</nav>
 
 		<script>
 			function onSignIn(googleUser) {
