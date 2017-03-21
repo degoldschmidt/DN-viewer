@@ -8,15 +8,7 @@
 		<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
   </head>
   <body>
-		<!-- Colored raised button -->
-		<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="onSignIn(googleUser)">
-		  Sign In
-		</button>
-		<!-- Accent-colored raised button -->
-		<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" onclick="signOut()">
-		  Sign Out
-		</button>
-    <script>
+		<script>
       function onSignIn(googleUser) {
         // Useful data for your client-side scripts:
         var profile = googleUser.getBasicProfile();
@@ -51,5 +43,13 @@
 				});
 
     </script>
+		<!-- Colored raised button -->
+		<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="onSignIn">
+		  Sign In
+		</button>
+		<!-- Accent-colored raised button -->
+		<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" onclick="signOut">
+		  Sign Out
+		</button>
   </body>
 </html>
