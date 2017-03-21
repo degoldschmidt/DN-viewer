@@ -3,10 +3,19 @@
     <meta name="google-signin-scope" content="profile email">
     <meta name="google-signin-client_id" content="869104261111-vpmpfafrt33huqmu6kktssbpcreut72r.apps.googleusercontent.com">
     <script src="https://apis.google.com/js/platform.js" async defer></script>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+		<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+		<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
   </head>
   <body>
-    <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark">Sign In</div>
-		<div class="g-signin2" data-onsuccess="signOut" data-theme="dark">Sign Out</div>
+		<!-- Colored raised button -->
+		<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+		  Sign In
+		</button>
+		<!-- Accent-colored raised button -->
+		<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">
+		  Sign Out
+		</button>
     <script>
       function onSignIn(googleUser) {
         // Useful data for your client-side scripts:
@@ -29,6 +38,17 @@
 		      console.log('User signed out.');
 		    });
 		  }
+
+			function renderButton() {
+				gapi.signin2.render('my-signin2', {
+					'scope': 'profile email',
+					'width': 240,
+					'height': 50,
+					'longtitle': true,
+					'theme': 'dark',
+					'onsuccess': onSuccess,
+					'onfailure': onFailure
+				});
 
     </script>
   </body>
