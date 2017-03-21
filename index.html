@@ -27,22 +27,15 @@
 	body {
 		background: url('https://degoldschmidt.github.io/DN-viewer/img/6_Boerner.jpg');
 	}
-	#div1 {
-    float: left;
-}
-
-	#div2 {
-    float: left;
-	}
 	</style>
   <body onload="signOut()">
 		<nav>
 		<!-- Colored raised button -->
-		<div id="div1" class="g-signin2" data-onsuccess="onSignIn"></div>
+		<div class="g-signin2" data-onsuccess="onSignIn"></div>
 		<!-- Accent-colored raised button -->
-		<button id="div2" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" onclick="signOut()">
+		/*<button id="div2" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" onclick="signOut()">
 		  Sign Out
-		</button>
+		</button>*/
 	</nav>
 
 		<script>
