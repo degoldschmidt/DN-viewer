@@ -29,12 +29,18 @@ text {
 }
 
 .inner_node rect {
+	  transform-origin: 50% 50%;
     pointer-events: all;
 }
 
 .inner_node rect.highlight {
-    stroke: #315B7E;
-    stroke-width: 2px;
+    stroke: #fff;
+    stroke-width: 1px;
+		transform: scale(3);
+		z-index: 1;
+}
+
+.inner_node text{
 }
 
 .outer_node circle {
@@ -46,8 +52,9 @@ text {
 
 .outer_node circle.highlight
 {
-    stroke: #315B7E;
-    stroke-width: 2px;
+    stroke: #ff6600;
+		fill: 	#ff6600;
+    stroke-width: 0px;
 }
 
 .outer_node text{
@@ -77,13 +84,21 @@ text {
 // Loosely based on http://bl.ocks.org/mbostock/4063550
 //
 var clicked = 0;
-var data = [[120, ["like", "call response", "dramatic intro", "has breaks", "male vocalist", "silly", "swing"],
-						["like", "call response", "dramatic intro", "has breaks", "male vocalist", "silly", "swing"]],
-						[150, ["brassy", "like", "calm energy", "female vocalist", "swing", "fun"], ["brassy", "like", "calm energy", "female vocalist", "swing", "fun"]],
-						[170, ["calm energy", "instrumental", "swing", "like", "happy"], ["calm energy", "instrumental", "swing", "like", "happy"]],
-						[140, ["has breaks", "male vocalist", "swing", "piano", "banjo", "chill"], ["has breaks", "male vocalist", "swing", "piano", "banjo", "chill"]],
-						[160, ["calm energy", "instrumental", "swing", "like", "interesting"], ["calm energy", "instrumental", "swing", "like", "interesting"]],
-						[140, ["brassy", "like", "energy", "dramatic intro", "male vocalist", "baseball", "swing"], ["brassy", "like", "energy", "dramatic intro", "male vocalist", "baseball", "swing"]]];
+var data = [['001', ['VNC L Tm'], ['AVLP', 'PVLP', 'GNG']], ['003', ['VNC T1 LN', 'VNC T2 LN', 'VNC T3 LN'], ['LAL', 'PLP', 'IPS', 'SPS', 'EPA', 'GOR', 'VES', 'GNG']],
+						['004', ['VNC T1 Tm', 'VNC T2 Tm', 'VNC T3 Tm', 'VNC T1 LN', 'VNC T2 LN', 'VNC T3 LN'], ['AL', 'ICL', 'SCL', 'FLA', 'PRW', 'SAD', 'SLP', 'PLP', 'WED', 'GOR', 'VES', 'GNG']],
+						['005', ['VNC L Tm'], ['AMMC', 'PVLP', 'GOR']],
+						['006', ['VNC T1 Tm', 'VNC T2 Tm', 'VNC T3 Tm', 'VNC L Tm', 'VNC T1 LN', 'VNC T2 LN', 'VNC T3 LN'], ['AL', 'SAD', 'PLP', 'WED', 'PVLP', 'SPS', 'GNG']],
+						['009', ['VNC Wing', 'VNC Halt', 'VNC AS Tm', 'VNC AS N'], ['FLA', 'SMP', 'GNG']],
+						['010', ['VNC T1 Tm', 'VNC T2 Tm', 'VNC T3 Tm'], ['FLA', 'SLP', 'GNG']],
+						['011', ['VNC T1 LN', 'VNC T2 LN', 'VNC T3 LN'], ['LAL', 'IPS', 'SPS', 'EPA', 'VES', 'GNG']],
+						['013', ['VNC Neck', 'VNC Wing', 'VNC Halt'], ['IPS', 'SPS']],
+						['019', ['VNC T1 Tm', 'VNC T2 Tm', 'VNC T3 Tm', 'VNC L Tm', 'VNC AS Tm'], ['ICL', 'SCL', 'AMMC', 'AVLP', 'WED', 'PVLP', 'GNG']],
+						['021', ['VNC T1 LN', 'VNC T2 LN', 'VNC T3 LN'], ['SLP', 'GNG']],
+						['029', ['VNC Neck'], ['IPS', 'SPS']],
+						['032', ['VNC Neck', 'VNC Wing', 'VNC Halt', 'VNC T1 Tm', 'VNC T2 Tm'], ['PLP', 'WED', 'PVLP', 'IPS', 'SPS', 'GNG']],
+						['033', ['VNC T1 Tm', 'VNC T2 Tm', 'VNC T3 Tm', 'VNC T1 LN', 'VNC T2 LN', 'VNC T3 LN'], ['SAD', 'AMMC', 'WED', 'GNG']],
+						['034', ['VNC Neck', 'VNC Wing', 'VNC Halt'], ['SAD', 'WED', 'GNG']],
+						['035', ['VNC Neck', 'VNC Wing', 'VNC Halt', 'VNC T1 Tm', 'VNC T2 Tm', 'VNC T3 Tm'], ['AMMC']], ['036', ['VNC Neck', 'VNC Wing', 'VNC T1 Tm', 'VNC T2 Tm', 'VNC T3 Tm'], ['PLP', 'PVLP', 'IPS', 'SPS', 'EPA', 'VES', 'GNG']], ['044', ['VNC T1 Tm', 'VNC T2 Tm', 'VNC T3 Tm', 'VNC L Tm', 'VNC T1 LN', 'VNC T2 LN', 'VNC T3 LN'], ['ICL', 'SCL', 'SLP', 'PLP', 'EPA', 'VES']], ['045', ['VNC Wing', 'VNC Halt'], ['ICL', 'IB', 'IPS', 'SPS', 'GNG']], ['047', ['VNC T1 Tm', 'VNC T2 Tm', 'VNC T3 Tm', 'VNC L Tm', 'VNC AS Tm', 'VNC AMN', 'VNC T1 LN', 'VNC T2 LN', 'VNC T3 LN'], ['AVLP', 'WED', 'PVLP', 'VES', 'GNG']], ['052', [], ['FLA', 'PRW', 'GNG']], ['053', ['VNC Neck', 'VNC Wing', 'VNC Halt', 'VNC T1 Tm', 'VNC T2 Tm', 'VNC T3 Tm'], ['IB', 'SAD', 'PLP', 'IPS', 'SPS', 'GNG']], ['054', ['VNC T1 LN', 'VNC T2 LN', 'VNC T3 LN'], ['IPS', 'SPS', 'GNG']], ['055', ['VNC Neck', 'VNC Halt'], ['IPS', 'GNG']], ['056', ['VNC Neck', 'VNC Wing', 'VNC Halt', 'VNC T1 Tm', 'VNC T2 Tm', 'VNC T3 Tm'], ['IPS', 'SPS', 'EPA', 'VES', 'GNG']], ['058', ['VNC T1 Tm', 'VNC T2 Tm', 'VNC T3 Tm', 'VNC L Tm', 'VNC AS Tm', 'VNC T1 LN', 'VNC T2 LN'], ['LO', 'AMMC', 'PLP', 'PVLP', 'GNG']], ['065', ['VNC Neck', 'VNC Wing', 'VNC Halt', 'VNC T1 Tm', 'VNC T2 Tm', 'VNC T3 Tm'], ['IPS', 'SPS', 'GNG']], ['066', ['VNC T1 Tm', 'VNC T2 Tm'], ['SCL', 'LH', 'FLA', 'PRW', 'SMP', 'SLP', 'GNG']], ['067', ['VNC T1 Tm', 'VNC T2 Tm', 'VNC T3 Tm'], ['IB', 'SAD', 'SPS', 'EPA', 'VES', 'GNG']], ['074', ['VNC Neck', 'VNC T1 Tm', 'VNC T2 Tm'], ['PLP', 'PVLP', 'IPS', 'SPS', 'GNG']], ['085', ['VNC Neck'], ['GNG']], ['090', ['VNC T1 Tm', 'VNC T2 Tm', 'VNC T3 Tm'], ['SAD', 'AMMC', 'IPS', 'GNG']], ['094', ['VNC Neck', 'VNC Wing'], ['LAL', 'IPS', 'SPS', 'EPA', 'VES', 'GNG']], ['095', ['VNC Neck', 'VNC Wing', 'VNC Halt', 'VNC T1 Tm', 'VNC T2 Tm', 'VNC T3 Tm', 'VNC T1 LN', 'VNC T3 LN'], ['LAL', 'IPS', 'SPS', 'EPA', 'VES', 'GNG']], ['096', ['VNC Neck', 'VNC Halt', 'VNC T1 LN'], ['IPS', 'SPS']], ['099', ['VNC T1 LN', 'VNC T2 LN', 'VNC T3 LN', 'VNC AS N'], ['LAL', 'CAN', 'IPS', 'SPS', 'EPA', 'GOR', 'VES', 'GNG']], ['101', ['VNC Neck', 'VNC Wing', 'VNC T1 Tm', 'VNC T2 Tm', 'VNC T3 Tm'], ['PLP', 'PVLP', 'IPS', 'SPS', 'GNG']], ['105', ['VNC Wing', 'VNC T1 Tm', 'VNC T2 Tm', 'VNC T3 Tm', 'VNC L Tm', 'VNC AS Tm', 'VNC AMN', 'VNC AS N'], ['ICL', 'SCL', 'CRE', 'FLA', 'SMP', 'SIP', 'SLP', 'AVLP', 'GOR', 'GNG']], ['106', ['VNC T1 Tm', 'VNC T2 Tm', 'VNC T3 Tm', 'VNC T1 LN', 'VNC T2 LN', 'VNC T3 LN'], ['ICL', 'SCL', 'SAD', 'SMP', 'PLP', 'AVLP', 'WED', 'PVLP', 'SPS', 'GNG']], ['111', ['VNC T1 Tm', 'VNC T2 Tm', 'VNC T3 Tm', 'VNC L Tm', 'VNC AS Tm'], ['ME', 'LOP', 'LO', 'ICL', 'SCL', 'IB', 'SAD', 'SMP', 'SIP', 'PLP', 'AVLP', 'WED', 'PVLP', 'SPS', 'GNG']], ['113', ['VNC Neck', 'VNC Wing', 'VNC Halt', 'VNC T1 Tm', 'VNC T2 Tm', 'VNC T3 Tm'], ['PLP', 'IPS', 'SPS', 'EPA', 'GNG']], ['114', ['VNC Wing'], ['ICL', 'IB', 'CAN', 'FLA', 'PRW', 'SPS', 'GNG']], ['115', ['VNC T1 Tm', 'VNC T2 Tm', 'VNC T3 Tm', 'VNC L Tm', 'VNC AS Tm', 'VNC AMN'], ['ICL', 'SCL', 'IB', 'CAN', 'SLP', 'PLP', 'AVLP', 'PVLP', 'SPS', 'GNG']], ['118', ['VNC Neck', 'VNC Wing'], ['IPS', 'SPS', 'GNG']], ['121', ['VNC T1 Tm', 'VNC T2 Tm', 'VNC T3 Tm', 'VNC AS Tm', 'VNC T1 LN', 'VNC T2 LN', 'VNC T3 LN'], ['ICL', 'AVLP', 'WED', 'PVLP', 'IPS', 'SPS', 'GOR', 'GNG']], ['125', ['VNC T3 Tm', 'VNC AS Tm', 'VNC T1 LN', 'VNC T3 LN'], ['SAD', 'GNG']], ['127', ['VNC Neck', 'VNC Wing', 'VNC T1 Tm', 'VNC T2 Tm', 'VNC T3 Tm', 'VNC AS Tm', 'VNC T2 LN', 'VNC T3 LN'], ['SAD', 'AMMC', 'IPS', 'SPS']], ['129', ['VNC T1 Tm', 'VNC T2 Tm', 'VNC T3 Tm'], ['ICL', 'CAN', 'PLP', 'PVLP', 'SPS', 'GNG']], ['132', ['VNC Neck'], ['GNG']], ['133', ['VNC T2 Tm', 'VNC L Tm', 'VNC T2 LN'], ['AMMC', 'PVLP', 'GNG']], ['138', ['VNC Neck', 'VNC Wing', 'VNC Halt', 'VNC AS N'], ['IB', 'FLA', 'IPS', 'SPS', 'GNG']], ['139', ['VNC T1 Tm', 'VNC T2 Tm', 'VNC T3 Tm', 'VNC T1 LN', 'VNC T2 LN'], ['SAD', 'GNG']], ['140', ['VNC L Tm'], ['SAD', 'AMMC', 'WED', 'GNG']], ['144', ['VNC T1 Tm', 'VNC T2 Tm', 'VNC T3 Tm', 'VNC AS Tm'], ['SAD', 'VES', 'GNG']], ['145', ['VNC T1 Tm', 'VNC T2 Tm', 'VNC T3 Tm', 'VNC AS Tm'], ['FLA', 'SMP']], ['148', ['VNC T1 Tm', 'VNC T2 Tm', 'VNC T3 Tm', 'VNC L Tm'], ['AMMC', 'AVLP', 'WED', 'PVLP', 'GOR', 'GNG']], ['156', ['VNC T1 LN', 'VNC T2 LN', 'VNC T3 LN'], ['GNG']], ['158', ['VNC Neck', 'VNC T1 LN', 'VNC T2 LN', 'VNC T3 LN'], ['GNG']], ['159', ['VNC T1 Tm', 'VNC T1 LN'], ['IPS', 'GNG']], ['161', ['VNC T1 Tm', 'VNC T3 Tm'], ['PLP', 'IPS', 'GNG']], ['162', ['VNC T1 Tm', 'VNC T2 Tm', 'VNC T3 Tm'], ['IPS', 'SPS', 'GNG']], ['165', ['VNC Wing', 'VNC T1 LN'], ['SAD', 'GNG']], ['167', ['VNC T1 LN', 'VNC T2 LN', 'VNC T3 LN'], ['GNG']], ['170', ['VNC Neck', 'VNC Wing', 'VNC T2 Tm', 'VNC T3 Tm'], ['IB', 'SAD', 'SMP', 'SIP', 'AOTU', 'PLP', 'IPS', 'SPS', 'GNG']], ['171', ['VNC Wing'], ['WED', 'IPS', 'GNG']], ['172', ['VNC Neck', 'VNC Wing', 'VNC T1 Tm', 'VNC T2 Tm', 'VNC T3 Tm'], ['IB', 'SAD', 'AMMC', 'IPS', 'SPS', 'GNG']], ['174', ['VNC T1 Tm', 'VNC T1 LN'], ['GNG']], ['175', ['VNC Neck', 'VNC Wing', 'VNC Halt'], ['IPS', 'GNG']], ['176', ['VNC T2 Tm', 'VNC L Tm', 'VNC AS Tm', 'VNC T1 LN', 'VNC T2 LN'], ['WED', 'GNG']], ['178', ['VNC Wing', 'VNC T1 Tm', 'VNC T2 Tm', 'VNC T3 Tm'], ['ICL', 'SCL', 'CAN', 'SAD', 'SMP', 'SIP', 'SLP', 'IPS', 'SPS', 'EPA', 'GOR', 'VES']], ['179', ['VNC Neck', 'VNC T1 Tm'], ['WED', 'GNG']], ['180', ['VNC T1 LN', 'VNC T2 LN', 'VNC T3 LN'], ['ICL', 'SMP', 'GOR', 'VES', 'GNG']], ['181', ['VNC T1 LN', 'VNC T2 LN'], ['AMMC', 'WED', 'GNG']], ['182', ['VNC T1 LN', 'VNC T2 LN', 'VNC T3 LN'], ['GNG']], ['183', ['VNC T1 LN', 'VNC T2 LN', 'VNC T3 LN'], ['GNG']], ['184', ['VNC Wing'], ['SAD', 'IPS']], ['185', ['VNC Neck', 'VNC Halt'], ['SAD', 'IPS', 'EPA', 'GOR', 'VES', 'GNG']], ['186', ['VNC T1 Tm', 'VNC T2 Tm', 'VNC T3 Tm'], ['IB', 'SAD', 'IPS', 'SPS', 'GNG']], ['187', ['VNC T1 Tm', 'VNC T2 Tm', 'VNC T3 Tm', 'VNC T1 LN', 'VNC T2 LN', 'VNC T3 LN'], ['LAL', 'PLP', 'IPS', 'SPS', 'EPA', 'GOR', 'VES', 'GNG']], ['188', ['VNC T1 Tm', 'VNC T2 Tm', 'VNC T3 Tm', 'VNC T1 LN', 'VNC T2 LN', 'VNC T3 LN'], ['SAD', 'WED', 'PVLP', 'GOR', 'GNG']], ['189', ['VNC Wing', 'VNC Halt'], ['ICL', 'SCL', 'IB', 'IPS', 'SPS', 'GNG']], ['190', ['VNC Neck', 'VNC Wing', 'VNC Halt', 'VNC T1 Tm', 'VNC T2 Tm', 'VNC T3 Tm', 'VNC L Tm', 'VNC AMN', 'VNC T1 LN', 'VNC T2 LN', 'VNC T3 LN'], ['FLA', 'SAD', 'PLP', 'AVLP', 'WED', 'PVLP', 'VES', 'GNG']], ['191', ['VNC Neck', 'VNC Halt'], ['IPS', 'GNG']], ['192', ['VNC Halt'], ['PLP', 'IPS', 'GNG']], ['193', ['VNC Neck', 'VNC Wing', 'VNC Halt', 'VNC T1 Tm', 'VNC T2 Tm', 'VNC T3 Tm'], ['SAD', 'AMMC', 'IPS', 'GNG']], ['194', ['VNC Neck', 'VNC T1 Tm'], ['SAD', 'AMMC', 'IPS', 'GNG']], ['195', ['VNC Neck', 'VNC Halt'], ['LAL', 'IPS', 'SPS', 'EPA', 'VES', 'GNG']], ['196', ['VNC Neck', 'VNC Wing', 'VNC T1 Tm', 'VNC T2 Tm', 'VNC T3 Tm'], ['PLP', 'PVLP', 'IPS', 'SPS', 'GNG']]];
 
 // transform the data into a useful representation
 // 1 is inner, 2, is outer
@@ -207,22 +222,25 @@ console.log(data.inputs.reduce(function(a,b) { return a + b.related_links.length
 
 // from d3 colorbrewer:
 // This product includes color specifications and designs developed by Cynthia Brewer (http://colorbrewer.org/).
-var colors = ["#a50026","#d73027","#f46d43","#fdae61","#fee090","#ffffbf","#e0f3f8","#abd9e9","#74add1","#4575b4","#313695"]
+var colors = ["#FE4365","#FC9D9A","#F9CDAD","#C8C8A9","#83AF9B"]
 var color = d3.scale.linear()
     .domain([60, 220])
     .range([colors.length-1, 0])
     .clamp(true);
-
-var diameter = 1600;//960;
+var il = data.inner.length;
+var ol = data.outer.length;
+var diameter = 40*il;//960;
+var indiameter = 60*il;//960;
+var outdiameter = 40*il;//960;
 var rect_width = 40;
 var rect_height = 14;
 var rect_height = 24;
-var limit = 30;
+var inlimit = 30;
+var outlimit = 50;
 
 var link_width = "1px";
 
-var il = data.inner.length;
-var ol = data.outer.length;
+
 //var inl = data.inputs.length;
 
 var inner_y = d3.scale.linear()
@@ -232,11 +250,11 @@ var inner_y = d3.scale.linear()
 mid = (data.outer.length/2.0)
 var outer_x = d3.scale.linear()
     .domain([0, data.outer.length])
-    .range([limit, 180-limit]);
+    .range([outlimit, 180-outlimit]);
 
 var input_x = d3.scale.linear()
     .domain([0, data.inputs.length])
-    .range([180+limit, 360-limit]);
+    .range([180+inlimit, 360-inlimit]);
 
 var outer_y = d3.scale.linear()
     .domain([0, data.outer.length])
@@ -246,14 +264,14 @@ var outer_y = d3.scale.linear()
 // setup positioning
 data.outer = data.outer.map(function(d, i) {
     d.x = outer_x(i);
-    d.y = diameter/3;
+    d.y = outdiameter/3;
 		d.clicked = 0;
     return d;
 });
 
 data.inputs = data.inputs.map(function(d, i) {
     d.x = input_x(i);
-    d.y = diameter/3;
+    d.y = indiameter/3;
 		d.clicked = 0;
     return d;
 });
@@ -302,98 +320,10 @@ var svg = d3.select("body").append("svg")
   .append("g")
     .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
 
-
-// links
-var link = svg.append('g').attr('class', 'links').selectAll(".link")
-    .data(data.links)
-  .enter().append('path')
-    .attr('class', 'link')
-    .attr('id', function(d) { return d.id })
-    .attr("d", diagonal)
-    .attr('stroke', function(d) { return get_color(d.inner.name); })
-    .attr('stroke-width', link_width);
-
-// outer nodes
-
-var onode = svg.append('g').selectAll(".outer_node")
-    .data(data.outer)
-  .enter().append("g")
-    .attr("class", "outer_node")
-    .attr("clicked", false)
-    .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
-    .on("mouseover", mouseover)
-    .on("mouseout", mouseout)
-    .on("click", mouseclick);
-
-onode.append("circle")
-    .attr('id', function(d) { return d.id })
-    .attr("r", 4.5);
-
-onode.append("circle")
-    .attr('r', 20)
-    .attr('visibility', 'hidden');
-
-onode.append("text")
-	.attr('id', function(d) { return d.id + '-txt'; })
-    .attr("dy", ".31em")
-    .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
-    .attr("transform", function(d) { return d.x < 180 ? "translate(8)" : "rotate(180)translate(-8)"; })
-    .text(function(d) { return d.name; });
-
-	// outer nodes
-
-var onode = svg.append('g').selectAll(".outer_node")
-    .data(data.inputs)
-  .enter().append("g")
-    .attr("class", "outer_node")
-    .attr("clicked", false)
-    .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
-    .on("mouseover", mouseover)
-    .on("mouseout", mouseout)
-    .on("click", mouseclick);
-
-onode.append("circle")
-    .attr('id', function(d) { return d.id })
-    .attr("r", 4.5);
-
-onode.append("circle")
-    .attr('r', 20)
-    .attr('visibility', 'hidden');
-
-onode.append("text")
-	.attr('id', function(d) { return d.id + '-txt'; })
-    .attr("dy", ".31em")
-    .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
-    .attr("transform", function(d) { return d.x < 180 ? "translate(8)" : "rotate(180)translate(-8)"; })
-    .text(function(d) { return d.name; });
-
-// inner nodes
-
-var inode = svg.append('g').selectAll(".inner_node")
-    .data(data.inner)
-  .enter().append("g")
-    .attr("class", "inner_node")
-    .attr("clicked", false)
-    .attr("transform", function(d, i) { return "translate(" + d.x + "," + d.y + ")"})
-    .on("mouseover", mouseover)
-    .on("mouseout", mouseout)
-    .on("click", mouseclick);
-
-inode.append('rect')
-    .attr('width', rect_width)
-    .attr('height', rect_height)
-    .attr('id', function(d) { return d.id; })
-    .attr('fill', function(d) { return get_color(d.name); });
-
-inode.append("text")
-	.attr('id', function(d) { return d.id + '-txt'; })
-    .attr('text-anchor', 'middle')
-    .attr("transform", "translate(" + rect_width/2 + ", " + rect_height * .75 + ")")
-    .text(function(d) { return d.name; });
-
+build(svg)
 // need to specify x/y/etc
 
-d3.select(self.frameElement).style("height", diameter - 150 + "px");
+d3.select(self.frameElement).style("height", diameter - 2000 + "px");
 
 function mouseover(d)
 {
@@ -425,26 +355,176 @@ function mouseout(d)
 
 function highlighter(d)
 {
+	d3.selectAll('.inner_node').filter(function (x) { return d.id != x.id; }).style("opacity", 0.5);
+	d3.selectAll('.outer_node').filter(function (x) { return d.id != x.id; }).style("opacity", 0.5);
+	d3.select(d.id).style("opacity", 1);
   for (var i = 0; i < d.related_nodes.length; i++)
   {
       d3.select('#' + d.related_nodes[i]).classed('highlight', true);
       d3.select('#' + d.related_nodes[i] + '-txt').attr("font-weight", 'bold');
+			d3.select('#' + d.related_nodes[i] + '-txt').classed('highlight', true);
+			d.related_nodes[i].clicked = 1;
+			console.log(contains(d.related_nodes[i], "i"))
+			if(contains(d.related_nodes[i], "i")){
+				d3.select('#' + d.related_nodes[i] + '-txt').attr("font-size", '36');
+			}
   }
 
   for (var i = 0; i < d.related_links.length; i++)
-      d3.select('#' + d.related_links[i]).attr('stroke-width', '5px');
+      d3.select('#' + d.related_links[i]).attr('stroke-width', '8px');
 }
 
 function dehighlighter(d)
 {
+	d3.selectAll(".inner_node").style("opacity", 1);
+	d3.selectAll(".outer_node").style("opacity", 1);
   for (var i = 0; i < d.related_nodes.length; i++)
   {
       d3.select('#' + d.related_nodes[i]).classed('highlight', false);
       d3.select('#' + d.related_nodes[i] + '-txt').attr("font-weight", 'normal');
+			d.related_nodes[i].clicked = 0;
+			if(contains(d.related_nodes[i], "i")){
+				d3.select('#' + d.related_nodes[i] + '-txt').attr("font-size", '18');
+			}
   }
 
   for (var i = 0; i < d.related_links.length; i++)
       d3.select('#' + d.related_links[i]).attr('stroke-width', link_width);
+}
+
+function contains(r,s){
+    return r.indexOf(s) > -1;
+}
+
+function build(svg)
+{
+	//LABELS for Central Brain and Ventral Nerve Cord
+	var svgText = svg.append('g').append("text")
+	.attr("text-anchor", "middle")
+	.attr("alignment-baseline", "central")
+	.attr("x", -0.25*diameter+"px")
+	.attr("y", 0.4*indiameter+"px")
+	.attr("font-size", "180")
+	.attr("fill", "#fff")
+	.text("Central Brain");
+
+	var svgText = svg.append('g').append("text")
+	.attr("text-anchor", "middle")
+	.attr("alignment-baseline", "central")
+	.attr("x", 0.35*diameter+"px")
+	.attr("y", 0.4*diameter+"px")
+	.attr("font-size", "180")
+	.attr("fill", "#fff")
+	.text("Ventral Nerve Cord");
+
+	var svgText = svg.append('g').append("text")
+	.attr("text-anchor", "middle")
+	.attr("alignment-baseline", "central")
+	.attr("x", 0.0*diameter+"px")
+	.attr("y", -1250+"px")
+	.attr("font-size", "120")
+	.attr("font-weight", "bold")
+	.attr("fill", "#fff")
+	.text("DN Index");
+
+	/*var label1= svg.append("text")
+		.attr('id', 'CRG-txt'; })
+			.attr("y", mid+"px")
+			.attr("font-size", "180")
+			.attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
+			.attr("transform",  "translate(-80)"; )
+			.text("Central Brain");*/
+
+	// links
+	var link = svg.append('g').attr('class', 'links').selectAll(".link")
+	    .data(data.links)
+	  .enter().append('path')
+	    .attr('class', 'link')
+	    .attr('id', function(d) { return d.id })
+	    .attr("d", diagonal)
+	    .attr('stroke', function(d) { return get_color(d.inner.name); })
+	    .attr('stroke-width', link_width);
+
+	// OUTPUT nodes
+
+	var onode = svg.append('g').selectAll(".outer_node")
+	    .data(data.outer)
+	  .enter().append("g")
+	    .attr("class", "outer_node")
+	    .attr("clicked", false)
+	    .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
+	    .on("mouseover", mouseover)
+	    .on("mouseout", mouseout)
+	    .on("click", mouseclick);
+
+	onode.append("circle")
+	    .attr('id', function(d) { return d.id })
+	    .attr("r", 4.5);
+
+	onode.append("circle")
+	    .attr('r', 20)
+	    .attr('visibility', 'hidden');
+
+	onode.append("text")
+		.attr('id', function(d) { return d.id + '-txt'; })
+	    .attr("dy", ".31em")
+			.attr("font-size", "72")
+	    .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
+	    .attr("transform", function(d) { return d.x < 180 ? "translate(8)" : "rotate(180)translate(-8)"; })
+	    .text(function(d) { return d.name; });
+
+		// INPUT nodes
+
+	var onode = svg.append('g').selectAll(".outer_node")
+	    .data(data.inputs)
+	  .enter().append("g")
+	    .attr("class", "outer_node")
+	    .attr("clicked", false)
+	    .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
+	    .on("mouseover", mouseover)
+	    .on("mouseout", mouseout)
+	    .on("click", mouseclick);
+
+	onode.append("circle")
+	    .attr('id', function(d) { return d.id })
+	    .attr("r", 4.5);
+
+	onode.append("circle")
+	    .attr('r', 20)
+	    .attr('visibility', 'hidden');
+
+	onode.append("text")
+		.attr('id', function(d) { return d.id + '-txt'; })
+	    .attr("dy", ".31em")
+	    .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
+			.attr("font-size", "64")
+	    .attr("transform", function(d) { return d.x < 180 ? "translate(8)" : "rotate(180)translate(-8)"; })
+	    .text(function(d) { return d.name; })
+			.on("mouseover", console.log("Hit it!"));
+
+	// inner nodes
+
+	var inode = svg.append('g').selectAll(".inner_node")
+	    .data(data.inner)
+	  .enter().append("g")
+	    .attr("class", "inner_node")
+	    .attr("clicked", false)
+	    .attr("transform", function(d, i) { return "translate(" + d.x + "," + d.y + ")"})
+	    .on("mouseover", mouseover)
+	    .on("mouseout", mouseout)
+	    .on("click", mouseclick);
+
+	inode.append('rect')
+	    .attr('width', rect_width)
+	    .attr('height', rect_height)
+	    .attr('id', function(d) { return d.id; })
+	    .attr('fill', function(d) { return get_color(d.name); });
+
+	inode.append("text")
+		.attr('id', function(d) { return d.id + '-txt'; })
+	    .attr('text-anchor', 'middle')
+	    .attr("transform", "translate(" + rect_width/2 + ", " + rect_height * .75 + ")")
+	    .text(function(d) { return d.name; });
 }
 
 </script>
