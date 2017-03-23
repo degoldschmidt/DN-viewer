@@ -362,7 +362,7 @@ function highlighter(d)
   {
       d3.select('#' + d.related_nodes[i]).classed('highlight', true);
       d3.select('#' + d.related_nodes[i] + '-txt').attr("font-weight", 'bold');
-			d3.select('#' + d.related_nodes[i] + '-txt').classed('highlight', true);
+			d3.select('#' + d.related_nodes[i]).style("opacity", 0.5);
 			d.related_nodes[i].clicked = 1;
 			console.log(contains(d.related_nodes[i], "i"))
 			if(contains(d.related_nodes[i], "i")){
@@ -402,8 +402,9 @@ function build(svg)
 	var svgText = svg.append('g').append("text")
 	.attr("text-anchor", "middle")
 	.attr("alignment-baseline", "central")
-	.attr("x", -0.4*diameter+"px")
-	.attr("y", 0.0*indiameter+"px")
+	.attr("transform", "rotate(315)")
+	.attr("x", 0.0*indiameter+"px")
+	.attr("y", -0.45*indiameter+"px")
 	.attr("font-size", "180")
 	.attr("fill", "#fff")
 	.text("Central Brain");
@@ -411,8 +412,9 @@ function build(svg)
 	var svgText = svg.append('g').append("text")
 	.attr("text-anchor", "middle")
 	.attr("alignment-baseline", "central")
-	.attr("x", 0.4*diameter+"px")
-	.attr("y", 0.0*diameter+"px")
+	.attr("transform", "rotate(45)")
+	.attr("x", 0.0*diameter+"px")
+	.attr("y", -0.4*indiameter+"px")
 	.attr("font-size", "180")
 	.attr("fill", "#fff")
 	.text("Ventral Nerve Cord");
